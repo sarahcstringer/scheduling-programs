@@ -1,3 +1,3 @@
 make lint:
-	isort main.py
-	black main.py
+	isort main.py schedule_example.py
+	black main.py schedule_example.py
