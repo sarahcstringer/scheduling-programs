@@ -1,8 +1,7 @@
 # Scheduling python programs different ways
 
-You have a python program that you want to run periodically.
-For this example, let's pretend that we want to run a program
-that sends a text with the weather in your zipcode every morning.
+Let's pretend that we want to run a program that sends a text with the
+weather in your zipcode every morning.
 
 After we've written the script, how do we set it up so that it runs
 periodically without us needing to manually run it?
@@ -34,15 +33,17 @@ in this repository called `secrets.sh`. This file is going to contain our API to
 touch secrets.sh
 ```
 
-Open the file and inside it, create an environment variable for the OpenWeather API key.
+> **Note about secrets.sh:** You **do not want to check your secrets into Github.**
+> You don't want any of your credentials stored in Git, because they'll remain in
+> git history and you don't want other people to have your personal access tokens.
+> In this repo, `secrets.sh` is already included in our `.gitignore` file, so it won't
+> be checked in.
+
+Open the `secrets.sh` file and inside it, create an environment variable for the OpenWeather API key.
 
 ```
 export OPENWEATHER_API_KEY=<your key goes here>
 ```
-
-**Note:** You explicitly do not want to check your secrets file into Github.
-You don't want any of your credentials stored in Git, because they are your personal
-access tokens for the API.
 
 ### Signing up for Twilio
 
@@ -80,7 +81,8 @@ export TWILIO_SENDER_NUMBER=<your twilio number here>
 
 Finally, add the phone number that you used when signing up for your Twilio
 account. This will be the number that we send SMS messages to for this
-project, while it's still in a trial phase.
+project, while it's still in a trial phase. When your project is in trial mode, you can
+only send Twilio messages to your own phone number.
 
 ```
 export TWILIO_RECEIVER_NUMBER=<your personal hone number, verified with Twilio>
@@ -88,8 +90,8 @@ export TWILIO_RECEIVER_NUMBER=<your personal hone number, verified with Twilio>
 
 ## Scheduling
 
-Now that we have the script working, let's talk about different ways to
-automate this.
+Now that we have the script working, let's go through two different ways to
+automate this script.
 
 ### Version 1: Using Cron
 
@@ -193,15 +195,27 @@ schedule.
 There are several python libraries to allow scheduling programs.
 [`schedule`](https://pypi.org/project/schedule/) is one of those.
 
+The basic concept of `schedule` is that you give it a python function
+to run and a schedule that you want it to run on, and then create a while True
+loop and let `schedule` handle calling the function at the right time.
 
-### Version 3: Using Celery
+We have an example file already written. Open
+[`schedule_example.py`](https://github.com/sarahcstringer/scheduling-programs/blob/master/schedule_example.py)
+to view the sample.
 
-Celery is a distributed task queue for python. This is the most involved
-of the different options listed.
+The file needs three things:
+1) A task to run.
+2) A line or lines indicating when or how often to run that task.
+3) A while True loop, where schedule handles running tasks when scheduled.
 
-https://github.com/celery/celery
+In our example, we import the task to run (the `main` function from main.py)
+and give it the schedule to run every day at 10. There's also a commented out
+line that sets the task to run every minute, which you can uncomment to see
+the schedule working.
 
-# Questions? Issues?
+All we need to do is run this file, and as long as it's going, it will continue
+to call the function at the appropriate time.
 
-Feel free to open up a Github issue with any questions or problems with
-this process.
+```
+python3 schedule_example.py
+```
