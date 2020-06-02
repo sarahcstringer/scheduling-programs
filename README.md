@@ -213,9 +213,12 @@ and give it the schedule to run every day at 10. There's also a commented out
 line that sets the task to run every minute, which you can uncomment to see
 the schedule working.
 
-All we need to do is run this file, and as long as it's going, it will continue
-to call the function at the appropriate time.
+All we need to do is source our secrets into our environment, activate our virtual
+environment, and run this file. As long as it's running, it will continue to call
+the function at the appropriate time.
 
 ```
+source secrets.sh
+source venv/bin/activate
 python3 schedule_example.py
 ```
