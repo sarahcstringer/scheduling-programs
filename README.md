@@ -157,9 +157,9 @@ The `crontab` command is how we'll edit the list of cron jobs our system has.
 `crontab -e` allows you to edit your existing crontab or create a new one if
 one doesn't already exist.
 
-To open the crontab in sublime, run `VISUAL=/usr/bin/subl crontab -e` (if you
-just run `crontab -e`, it will open up in whatever text editor your system
-defaults to, such as vim or nano).
+To open the crontab, run `crontab -e`. It will open in your system's default
+text editor, such as `vim` or `nano`, or it will give you a choice of
+which editor to open in if your system doesn't have a default set.
 
 Now we'll put in the schedule that we want this to run on, followed
 by the command we want it to run. We want it to go into our project
